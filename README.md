@@ -16,7 +16,11 @@ If you want self-contained files, consider [GLB file format](https://github.com/
 | **`inline`** | `{Boolean}` | `false` | Inline glTF files into bundle  |
 | **`pretty`** | `{Boolean}` | `false` | Make glTF files human readable |
 
-## Examples
+## Live code example
+
+Visit [this CodeSandbox](https://codesandbox.io/s/03p6ny629v) for the full-featured example that you can download or play online.
+
+## Configuration examples
 
 Output glTF files (whitespace is reduced by default):
 
