@@ -79,11 +79,7 @@ function runModule(source, name, options = {}) {
 }
 
 module.exports = function(source) {
-  const defaults = {
-    inline: false,
-    prettify: false
-  }
-
+  const defaults = { inline: false, pretty: false }
   const options = { ...defaults, ...getOptions(this) }
 
   const callback = this.async()

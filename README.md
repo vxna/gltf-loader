@@ -6,7 +6,7 @@ An opinionated webpack loader for [glTF](https://github.com/KhronosGroup/glTF) f
 
 ## Warning
 
-This loader emits warning on glTF files with [base64-encoded resources](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#uris) files because they are less efficient.  
+This loader emits warning on glTF files with [base64-encoded](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#uris) resources because they are less efficient.  
 If you want self-contained files, consider [GLB file format](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#glb-file-format-specification) instead and use it with [file-loader](https://github.com/webpack-contrib/file-loader) only.
 
 ## Options
