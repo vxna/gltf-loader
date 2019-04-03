@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.com/vxna/gltf-loader.svg)](https://travis-ci.com/vxna/gltf-loader) [![npm](https://img.shields.io/npm/v/@vxna/gltf-loader.svg)](https://www.npmjs.com/package/@vxna/gltf-loader)
 
-An opinionated webpack loader for [glTF](https://github.com/KhronosGroup/glTF) files and it's [resources](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#uris).
+An opinionated webpack loader for [glTF](https://github.com/KhronosGroup/glTF) files and it's [resources](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#gltf-basics).
 
 ## Warning
 
-This loader emits warning on [glTF-Embedded](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#gltf-basics) files because they are known to be less efficient.  
+This loader emits warning on glTF files with [base64-encoded resources](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#uris) files because they are less efficient.  
 If you want self-contained files, consider [GLB file format](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#glb-file-format-specification) instead and use it with [file-loader](https://github.com/webpack-contrib/file-loader) only.
 
 ## Options
