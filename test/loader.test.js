@@ -41,14 +41,15 @@ test('options: inline', async () => {
   expect(source).toMatchSnapshot()
 })
 
-test('edge case: warn if using embedded', async () => {
+test('edge case: warn if using datauri', async () => {
   const config = getConfig({ mode: 1 })
-  const stats = await compiler('embedded.js', config)
+  const stats = await compiler('datauri.js', config)
 
   const { modules } = stats.toJson()
   const { warnings } = modules.find(({ id }) => /Duck\.gltf$/.test(id))
   expect(warnings).toBeGreaterThan(0)
 })
+
 test('edge case: throw if inline with file-loader', async () => {
   const config = getConfig({ mode: 1 }, { inline: true })
   const stats = await compiler('base.js', config)
