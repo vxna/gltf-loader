@@ -3,14 +3,12 @@ const async = require('neo-async')
 const { stripIndents } = require('common-tags')
 const { getOptions, isUrlRequest, urlToRequest } = require('loader-utils')
 
-function getAssets(loaderContext, gltf, options = {}) {
+const getAssets = (loader, gltf, options = {}) => {
   return ['buffers', 'images'].reduce((memo, resource) => {
-    const resources = gltf[resource]
-
-    if (Array.isArray(resources)) {
+    if (Array.isArray(gltf[resource])) {
       memo.push(
-        ...resources.map(asset =>
-          resolveAssets.bind(null, loaderContext, asset, options.publicPath)
+        ...gltf[resource].map(asset =>
+          resolveAssets.bind(null, loader, asset, options.publicPath)
         )
       )
     }
@@ -19,20 +17,18 @@ function getAssets(loaderContext, gltf, options = {}) {
   }, [])
 }
 
-function resolveAssets(loaderContext, asset, options = {}, callback) {
-  const { context } = loaderContext
-
+const resolveAssets = (loader, asset, options = {}, callback) => {
   if (isUrlRequest(asset.uri)) {
     const request = urlToRequest(asset.uri)
 
-    loaderContext.resolve(context, request, (err, name) => {
+    loader.resolve(loader.context, request, (err, name) => {
       if (err) {
         return callback(err)
       }
 
-      loaderContext.addDependency(name)
+      loader.addDependency(name)
 
-      loaderContext.loadModule(name, (err, source) => {
+      loader.loadModule(name, (err, source) => {
         if (err) {
           return callback(err)
         }
@@ -45,7 +41,7 @@ function resolveAssets(loaderContext, asset, options = {}, callback) {
       return null
     })
   } else {
-    loaderContext.emitWarning(
+    loader.emitWarning(
       new Error(
         stripIndents`
         'glTF-Embedded' format is less efficient if used on the web.
@@ -62,7 +58,7 @@ function resolveAssets(loaderContext, asset, options = {}, callback) {
   return null
 }
 
-function runModule(source, name, options = {}) {
+const runModule = (source, name, options = {}) => {
   const script = new vm.Script(source, {
     filename: name,
     displayErrors: true
@@ -79,18 +75,19 @@ function runModule(source, name, options = {}) {
 }
 
 module.exports = function(source) {
+  const loader = this
+  const callback = loader.async()
+
+  loader.cacheable()
+
   const defaults = { inline: false, pretty: false }
-  const options = { ...defaults, ...getOptions(this) }
-
-  const callback = this.async()
-
-  this.cacheable()
+  const options = { ...defaults, ...getOptions(loader) }
 
   try {
     const gltf = JSON.parse(source)
-    const tasks = getAssets(this, gltf, options)
+    const tasks = getAssets(loader, gltf, options)
 
-    if (this.loaders.length === 1 && !options.inline) {
+    if (loader.loaders.length === 1 && !options.inline) {
       throw new Error(
         stripIndents`
         You can't output external glTF with '@vxna/gltf-loader' alone. 
@@ -101,7 +98,7 @@ module.exports = function(source) {
       )
     }
 
-    if (this.loaders.length > 1 && options.inline) {
+    if (loader.loaders.length > 1 && options.inline) {
       throw new Error(
         stripIndents`
         Option '{ inline: true }' can't be used in pair with 'file-loader'.
