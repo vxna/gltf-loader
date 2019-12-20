@@ -3,15 +3,16 @@ module.exports = {
     [
       '@semantic-release/commit-analyzer',
       {
-        preset: 'eslint'
+        releaseRules: [
+          { breaking: true, release: 'major' },
+          { type: 'breaking', release: 'major' },
+          { type: 'new', release: 'minor' },
+          { type: 'fix', release: 'patch' },
+          { type: 'upd', release: 'patch' }
+        ]
       }
     ],
-    [
-      '@semantic-release/release-notes-generator',
-      {
-        preset: 'eslint'
-      }
-    ],
+    '@semantic-release/release-notes-generator',
     '@semantic-release/npm',
     '@semantic-release/github'
   ]
