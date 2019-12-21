@@ -17,6 +17,7 @@ test('options: inline', async () => {
 
   const { modules } = stats.toJson()
   const { source } = modules.find(({ id }) => /Duck\.gltf$/.test(id))
+
   expect(source).toMatchSnapshot()
 })
 
@@ -26,23 +27,26 @@ test('edge case: warn if using datauri', async () => {
 
   const { modules } = stats.toJson()
   const { warnings } = modules.find(({ id }) => /Duck\.gltf$/.test(id))
+
   expect(warnings).toBeGreaterThan(0)
 })
 
-test('edge case: throw if inline with file-loader', async () => {
+test('edge case: error if inline with file-loader', async () => {
   const config = getConfig({ mode: 'external' }, { inline: true })
   const stats = await compiler('base.js', config)
 
   const { modules } = stats.toJson()
-  const { failed } = modules.find(({ id }) => /Duck\.gltf$/.test(id))
-  expect(failed).toBeTruthy()
+  const { errors } = modules.find(({ id }) => /Duck\.gltf$/.test(id))
+
+  expect(errors).toBeGreaterThan(0)
 })
 
-test('edge case: throw if external without file-loader', async () => {
-  const config = getConfig({ mode: 'inline' })
+test('edge case: error if external without file-loader', async () => {
+  const config = getConfig({ mode: 'inline' }, { inline: false })
   const stats = await compiler('base.js', config)
 
   const { modules } = stats.toJson()
-  const { failed } = modules.find(({ id }) => /Duck\.gltf$/.test(id))
-  expect(failed).toBeTruthy()
+  const { errors } = modules.find(({ id }) => /Duck\.gltf$/.test(id))
+
+  expect(errors).toBeGreaterThan(0)
 })
