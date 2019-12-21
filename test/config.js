@@ -1,7 +1,6 @@
-const path = require('path')
-const loader = path.resolve(__dirname, '../src')
-
 exports.getConfig = ({ mode }, options = {}, config = {}) => {
+  const loader = require.resolve('../src')
+
   const defaults = {
     rules: [
       {
