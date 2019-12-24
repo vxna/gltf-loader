@@ -25,7 +25,8 @@
     "lint": "eslint src/**/*.js --format codeframe --fix",
     "test": "jest",
     "format": "prettier src/**/*.{js,md} --write",
-    "posttest": "yarn format"
+    "posttest": "yarn format",
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "common-tags": "^1.8.0",

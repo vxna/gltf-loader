@@ -6,44 +6,28 @@ An opinionated webpack loader for [glTF](https://github.com/KhronosGroup/glTF) f
 
 ## Warning
 
-This loader emits warning on glTF files with [Data URI](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#uris) resources because they are less efficient.  
-If you want self-contained files, consider [GLB file format](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#glb-file-format-specification) instead and use it with [file-loader](https://github.com/webpack-contrib/file-loader) only.
+1. Usage with `file-loader@>=5.0.0` requires `esModule: false` [option](https://github.com/webpack-contrib/file-loader#esmodule).
+
+2. This loader emit warning on glTF files with [Data URI](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#uris) resources because they are less efficient. If you want self-contained files, consider [GLB](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#glb-file-format-specification) file format instead and use it with [file-loader](https://github.com/webpack-contrib/file-loader) only.
 
 ## Options
 
-| Name         | Type        | Default | Description                    |
-| ------------ | ----------- | ------- | ------------------------------ |
-| **`inline`** | `{Boolean}` | `false` | Inline glTF files into bundle  |
-| **`pretty`** | `{Boolean}` | `false` | Make glTF files human readable |
+| Name         | Type        | Default | Description              |
+| ------------ | ----------- | ------- | ------------------------ |
+| **`inline`** | `{Boolean}` | `false` | Inline glTF into bundle  |
+| **`pretty`** | `{Boolean}` | `false` | Make glTF human readable |
 
 ## Live code example
 
 Visit [this CodeSandbox](https://codesandbox.io/s/03p6ny629v) for the full-featured example that you can download or play online.
 
-## Configuration examples
+## Usage with `file-loader@>=5.0.0`
 
-Output glTF files (whitespace is reduced by default):
-
-```js
-module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.gltf$/,
-        use: ['file-loader', '@vxna/gltf-loader']
-      },
-      {
-        test: /\.(bin|jpe?g|png)$/,
-        loader: 'file-loader'
-      }
-    ]
-  }
-}
-```
-
-Inline glTF files (resources are still external):
+Inline glTF into bundle (geometry/textures are external):
 
 ```js
+// webpack.config.js
+
 module.exports = {
   module: {
     rules: [
@@ -54,7 +38,36 @@ module.exports = {
       },
       {
         test: /\.(bin|jpe?g|png)$/,
-        loader: 'file-loader'
+        loader: 'file-loader',
+        options: { esModule: false }
+      }
+    ]
+  }
+}
+```
+
+Output glTF file (geometry/textures are external):
+
+```js
+// webpack.config.js
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.gltf$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: { esModule: false }
+          },
+          '@vxna/gltf-loader'
+        ]
+      },
+      {
+        test: /\.(bin|jpe?g|png)$/,
+        loader: 'file-loader',
+        options: { esModule: false }
       }
     ]
   }
