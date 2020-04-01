@@ -1,5 +1,5 @@
 const compiler = require('./helpers/compiler')
-const { getConfig } = require('./helpers/config')
+const getConfig = require('./helpers/config')
 
 test('options: defaults', async () => {
   const config = getConfig({ mode: 'output' }, { options: { inline: false } })

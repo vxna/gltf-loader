@@ -36,4 +36,4 @@ const getConfig = ({ mode }, { options }, config = {}) => {
   return { ...defaults, ...config }
 }
 
-module.exports = { getConfig }
+module.exports = getConfig
