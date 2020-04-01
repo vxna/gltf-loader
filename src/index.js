@@ -7,7 +7,7 @@ const getAssets = (loader, gltf, options = {}) => {
   return ['buffers', 'images'].reduce((memo, resource) => {
     if (Array.isArray(gltf[resource])) {
       memo.push(
-        ...gltf[resource].map(asset =>
+        ...gltf[resource].map((asset) =>
           resolveAssets.bind(null, loader, asset, options.publicPath)
         )
       )
@@ -43,8 +43,8 @@ const resolveAssets = (loader, asset, options = {}, callback) => {
       stripIndents`
         @vxna/gltf-loader:
         
-        glTF-Embedded format is less efficient if used on the web.
-        If you want self-contained format, consider GLB instead. 
+        'glTF-Embedded' format is less efficient if used on the web.
+        If you want self-contained files, consider using 'GLB' instead. 
         
         Read more: https://git.io/fjIak
         `
@@ -57,12 +57,12 @@ const resolveAssets = (loader, asset, options = {}, callback) => {
 const runModule = (source, name, options = {}) => {
   const script = new vm.Script(source, {
     filename: name,
-    displayErrors: true
+    displayErrors: true,
   })
 
   const sandbox = {
     module: {},
-    __webpack_public_path__: options.publicPath || ''
+    __webpack_public_path__: options.publicPath || '',
   }
 
   script.runInNewContext(sandbox)
@@ -70,7 +70,7 @@ const runModule = (source, name, options = {}) => {
   return sandbox.module.exports.toString()
 }
 
-module.exports = function(source) {
+module.exports = function (source) {
   const callback = this.async()
 
   this.cacheable()
@@ -87,7 +87,7 @@ module.exports = function(source) {
         stripIndents`
           @vxna/gltf-loader:
 
-          Option { inline: true } can't be used in pair with file-loader.
+          Option '{ inline: true }' can't be used in pair with 'file-loader'.
 
           Read more: https://git.io/fjIV6
         `
@@ -99,15 +99,15 @@ module.exports = function(source) {
         stripIndents`
           @vxna/gltf-loader:
 
-          You can't output external glTF with @vxna/gltf-loader alone. 
-          Either add 'file-loader' or set option { inline: true }.
+          You can't output 'glTF' files with '@vxna/gltf-loader' alone. 
+          Either add 'file-loader' or set option '{ inline: true }'.
 
           Read more: https://git.io/fjIV6
         `
       )
     }
 
-    async.parallel(tasks, err => {
+    async.parallel(tasks, (err) => {
       if (err) {
         return callback(err)
       }

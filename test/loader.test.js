@@ -1,18 +1,18 @@
-/* eslint-env jest */
-const compiler = require('@webpack-contrib/test-utils')
-const { getConfig } = require('./config')
+const compiler = require('./helpers/compiler')
+const { getConfig } = require('./helpers/config')
 
 test('options: defaults', async () => {
-  const config = getConfig({ mode: 'external' })
+  const config = getConfig({ mode: 'output' }, { options: { inline: false } })
   const stats = await compiler('base.js', config)
 
   const buffer = stats.compilation.assets['Duck.gltf']._value
   const source = JSON.stringify(JSON.parse(buffer.toString('utf8')))
+
   expect(source).toMatchSnapshot()
 })
 
 test('options: inline', async () => {
-  const config = getConfig({ mode: 'inline' }, { inline: true })
+  const config = getConfig({ mode: 'inline' }, { options: { inline: true } })
   const stats = await compiler('base.js', config)
 
   const { modules } = stats.toJson()
@@ -21,8 +21,8 @@ test('options: inline', async () => {
   expect(source).toMatchSnapshot()
 })
 
-test('edge case: warn if using datauri', async () => {
-  const config = getConfig({ mode: 'external' })
+test('edge case: warn if glTF-Embedded', async () => {
+  const config = getConfig({ mode: 'output' }, { options: { inline: false } })
   const stats = await compiler('datauri.js', config)
 
   const { modules } = stats.toJson()
@@ -32,7 +32,7 @@ test('edge case: warn if using datauri', async () => {
 })
 
 test('edge case: error if inline with file-loader', async () => {
-  const config = getConfig({ mode: 'external' }, { inline: true })
+  const config = getConfig({ mode: 'output' }, { options: { inline: true } })
   const stats = await compiler('base.js', config)
 
   const { modules } = stats.toJson()
@@ -41,8 +41,8 @@ test('edge case: error if inline with file-loader', async () => {
   expect(errors).toBeGreaterThan(0)
 })
 
-test('edge case: error if external without file-loader', async () => {
-  const config = getConfig({ mode: 'inline' }, { inline: false })
+test('edge case: error if output without file-loader', async () => {
+  const config = getConfig({ mode: 'inline' }, { options: { inline: false } })
   const stats = await compiler('base.js', config)
 
   const { modules } = stats.toJson()
