@@ -33,20 +33,20 @@
     "neo-async": "^2.6.1"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.1",
+    "eslint": "^7.1.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "file-loader": "^6.0.0",
-    "husky": "^4.2.3",
-    "jest": "^25.2.4",
-    "lint-staged": "^10.1.1",
-    "memfs": "^3.1.2",
-    "prettier": "^2.0.2",
-    "webpack": "^4.42.1"
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "lint-staged": "^10.2.6",
+    "memfs": "^3.2.0",
+    "prettier": "^2.0.5",
+    "webpack": "^4.43.0"
   },
   "eslintConfig": {
     "extends": [
@@ -56,6 +56,9 @@
     "env": {
       "jest": true
     }
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "prettier": {
     "singleQuote": true,

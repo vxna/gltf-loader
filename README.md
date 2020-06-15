@@ -1,6 +1,6 @@
 # @vxna/gltf-loader
 
-[![Build Status](https://travis-ci.com/vxna/gltf-loader.svg)](https://travis-ci.com/vxna/gltf-loader) [![npm](https://img.shields.io/npm/v/@vxna/gltf-loader.svg)](https://www.npmjs.com/package/@vxna/gltf-loader)
+[![Build Status](https://travis-ci.com/vxna/gltf-loader.svg)](https://travis-ci.com/vxna/gltf-loader) [![npm version](https://badge.fury.io/js/%40vxna%2Fglsl-loader.svg)](https://badge.fury.io/js/%40vxna%2Fgltf-loader)
 
 An opinionated webpack loader for [glTF](https://github.com/KhronosGroup/glTF) files and it's [resources](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#gltf-basics).
 
@@ -34,15 +34,15 @@ module.exports = {
       {
         test: /\.gltf$/,
         loader: '@vxna/gltf-loader',
-        options: { inline: true }
+        options: { inline: true },
       },
       {
         test: /\.(bin|jpe?g|png)$/,
         loader: 'file-loader',
-        options: { esModule: false }
-      }
-    ]
-  }
+        options: { esModule: false },
+      },
+    ],
+  },
 }
 ```
 
@@ -59,18 +59,18 @@ module.exports = {
         use: [
           {
             loader: 'file-loader',
-            options: { esModule: false }
+            options: { esModule: false },
           },
-          '@vxna/gltf-loader'
-        ]
+          '@vxna/gltf-loader',
+        ],
       },
       {
         test: /\.(bin|jpe?g|png)$/,
         loader: 'file-loader',
-        options: { esModule: false }
-      }
-    ]
-  }
+        options: { esModule: false },
+      },
+    ],
+  },
 }
 ```
 
