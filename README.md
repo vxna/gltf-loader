@@ -1,6 +1,6 @@
 # @vxna/gltf-loader
 
-[![Build Status](https://travis-ci.com/vxna/gltf-loader.svg)](https://travis-ci.com/vxna/gltf-loader) [![npm version](https://badge.fury.io/js/%40vxna%2Fglsl-loader.svg)](https://badge.fury.io/js/%40vxna%2Fgltf-loader)
+[![Build Status](https://github.com/vxna/gltf-loader/workflows/test/badge.svg)](https://github.com/vxna/gltf-loader/actions?query=workflow%3Atest+branch%3Amaster) [![npm](https://img.shields.io/npm/v/@vxna/gltf-loader.svg)](https://www.npmjs.com/package/@vxna/gltf-loader)
 
 An opinionated webpack loader for [glTF](https://github.com/KhronosGroup/glTF) files and it's [resources](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#gltf-basics).
 
